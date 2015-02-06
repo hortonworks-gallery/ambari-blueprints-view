@@ -64,13 +64,25 @@
 <script>
 
 
+function fetchClusterName(url){
+	
+    var xmlHttp = new XMLHttpRequest();
+    alert(url);
+    xmlHttp.open( "GET", url, false );
+
+    xmlHttp.send( null );
+	var clusters = JSON.parse(xmlHttp.responseText);
+	return clusters.items[0].Clusters.cluster_name;
+}
+
 function updateUrl(){
 	var cluster  = document.getElementById('cluster').value.trim();
 	var host = document.getElementById('host').value.trim();
 	var select = document.getElementById("selectScenario"); 
 
 	var options = JSON.parse(document.getElementById('url_list').innerHTML);			  	
-	  
+	
+	//populate the picklist on first launch  
 	if (select.length == 1){			  
 		  
 		for(var i = 0; i < options.length; i++) {
@@ -80,16 +92,26 @@ function updateUrl(){
     		el.value = opt.url;
     		select.appendChild(el);
     	}
+ 
     }
-    
-    
-    //alert("selecteditem:" + select.selectedIndex);
 
-	//parse the hostname:port from document
+    
+
+ 	//parse the hostname:port from document or default to sandbox.hortonworks.com:8080
 	var parser = document.createElement('a');
 	parser.href = document.URL;
-	document.getElementById("host").value = parser.host;
-		
+	if (parser.host)
+		host = parser.host;    
+	else
+		host = "sandbox.hortonworks.com:8080";
+	document.getElementById("host").value = host;
+
+    //fetch cluster name by querying API http://sandbox.hortonworks.com:8080/api/v1/clusters or default to Sandbox
+    var clustername = fetchClusterName("http://" + host + "/api/v1/clusters"); 
+    if (!clustername)
+    	clustername = "Sandbox";	
+        			
+    //set the url textbox and post body text box based on user input    			
 	if (select.selectedIndex > 0){
 		textinput.value = options[select.selectedIndex - 1].url.replace("$host",host).replace("$cluster",cluster); 	
 		postinput.value = options[select.selectedIndex - 1].post.replace("$host",host).replace("$cluster",cluster).replace(/'/g,'"'); 
@@ -99,7 +121,7 @@ function updateUrl(){
 }
 
 
-function httpGet()
+function Submit()
 {
     var xmlHttp = null;
 	var username  = document.getElementById('username').value.trim();
@@ -110,8 +132,9 @@ function httpGet()
 	var resultArea  = document.getElementById('resultArea');
 	resultArea.value = "";
 
-	//var theUrl  = 'file:///Users/abajwa/Downloads/index.html';
     xmlHttp = new XMLHttpRequest();
+    
+	//if post text field is not empty, perform PUT
     if (post){
     	//alert("Opening " + url + " with post: " + post);
     	xmlHttp.open( "PUT", url, false );
@@ -120,6 +143,8 @@ function httpGet()
     	xmlHttp.setRequestHeader('X-Requested-By', 'ambari');
     	xmlHttp.send( JSON.stringify(post) );
     }
+    
+	//otherwise perform GET
     else{
     	//alert("Opening GET:" + url);
     	xmlHttp.open( "GET", url, false );
@@ -142,7 +167,7 @@ function httpGet()
 
   <label for="host">
     <span>Ambari server host:port</span>
-    <input type="text" id="host" size="30" value="host:port" />
+    <input type="text" id="host" size="30" />
   </label>  
 
   <label for="cluster">
@@ -180,7 +205,7 @@ function httpGet()
   
 </form>
 
-<form name="myform" action="javascript:httpGet()" method="POST">
+<form name="myform" action="javascript:Submit()" method="POST">
 <input id="textinput" type="text" size="150" value="" />
 <h3>Post Body</h3>
 <textarea align="center" id="postinput" rows="5" cols="150"> </textarea>
