@@ -104,4 +104,4 @@ http://sandbox.hortonworks.com:8080
 ##### Add your own operations
 
 - You can add your own operations by modifying [the JSON](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L7) containing the sample operations
-
+  - Note the single quotes in the JSON body will be replaced by double quotes in the view
