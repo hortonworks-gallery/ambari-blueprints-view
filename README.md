@@ -63,9 +63,9 @@ service ambari restart
 service ambari-server restart
 ```
 
-- Now open Ambari and navigate to the Views as shown below and select 'Blueprint View'
+- Now open Ambari and navigate to the Views and select 'Blueprint View'
 http://sandbox.hortonworks.com:8080
-![Image](../master/screenshots/Open-view.png?raw=true)
+![Image](../master/screenshots/blueprint-view.png?raw=true)
 
 ---------------------
 
@@ -103,5 +103,5 @@ http://sandbox.hortonworks.com:8080
 
 ##### Add your own operations
 
-- You can add your own operations by modifying [the JSON](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L7) containing the sample operations
+- You can add your own operations by modifying the JSON in [/var/lib/ambari-server/resources/views/work/BLUEPRINT_VIEW{1.0.0}/index.html](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L7) containing the sample operations, and refreshing the view
   - Note the single quotes in the JSON body will be replaced by double quotes in the view
