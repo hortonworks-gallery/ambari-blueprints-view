@@ -83,7 +83,7 @@ http://sandbox.hortonworks.com:8080
   - ![Image](../master/screenshots/stop-Hbase.png?raw=true)
 
 - After a few seconds, check HBase status:
-  - Select "HBase status" from the dropdown and click Submit. Notice it is now "INSTALLED" which means is not running
+  - Select "HBase status" from the dropdown and click Submit. Notice state is now "INSTALLED" which means is not running
   - ![Image](../master/screenshots/status-Hbase.png?raw=true)
   
 - Start HBase (assuming its stopped):
@@ -91,7 +91,7 @@ http://sandbox.hortonworks.com:8080
   - ![Image](../master/screenshots/start-Hbase.png?raw=true)
 
 - Check HBase status:
-  - Select "HBase status" from the dropdown and click Submit. Notice that it is now started
+  - Select "HBase status" from the dropdown and click Submit. Notice that state is now "STARTED"
   - ![Image](../master/screenshots/status-Hbase-started.png?raw=true)
 
 - Notice that the status check APIs did not require a request body but the stop/start ones did
