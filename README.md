@@ -3,7 +3,7 @@ Demo view to manage Ambari via REST calls using some sample operations:
 - Export blueprint
 - Get status of components
 - Stop/Start services
-- [add your own operations](https://github.com/abajwa-hw/blueprints-view#add-your-own-operations)
+- [Add your own operations](https://github.com/abajwa-hw/blueprints-view#add-your-own-operations)
 
 	 
 		
