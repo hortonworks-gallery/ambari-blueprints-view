@@ -1,0 +1,195 @@
+<html>
+<head>
+<title>BluePrints Demo </title>
+</head>
+
+
+<script type="application/json" id="url_list">
+
+[
+    {
+        "id": 1,
+        "name": "Full cluster blueprint",
+        "post": "",
+        "url": "http://$host/api/v1/clusters/$cluster?format=blueprint"
+    },
+    {
+        "id": 2,
+        "name": "HDFS status",
+        "post": "",
+        "url": "http://$host/api/v1/clusters/$cluster/services/HDFS"
+    },
+    {
+        "id": 3,
+        "name": "HDFS Datanode status",
+        "post": "",
+        "url": "http://$host/api/v1/clusters/$cluster/services/HDFS/components/DATANODE"
+    },
+    {
+        "id": 4,
+        "name": "HDFS Namenode status",
+        "post": "",
+        "url": "http://$host/api/v1/clusters/$cluster/services/HDFS/components/NAMENODE"
+    },
+    {
+        "id": 5,
+        "name": "YARN status",
+        "post": "",
+        "url": "http://$host/api/v1/clusters/$cluster/services/YARN"
+    },
+    {
+        "id": 6,
+        "name": "HBase status",
+        "post": "",
+        "url": "http://$host/api/v1/clusters/$cluster/services/HBASE"
+    },
+    {
+        "id": 7,
+        "name": "Start HBase",
+        "post": "{'RequestInfo': {'context' :'Start HBase via REST'}, 'Body': {'ServiceInfo': {'state': 'STARTED'}}}",
+        "url": "http://$host/api/v1/clusters/$cluster/services/HBASE"
+    },
+    {
+        "id": 8,
+        "name": "Stop HBase",
+        "post": "{'RequestInfo': {'context' :'Stop HBase via REST'}, 'Body': {'ServiceInfo': {'state': 'INSTALLED'}}}",
+        "url": "http://$host/api/v1/clusters/$cluster/services/HBASE"
+    }                
+        
+]
+
+
+</script>
+
+<script>
+
+
+function updateUrl(){
+	var cluster  = document.getElementById('cluster').value.trim();
+	var host = document.getElementById('host').value.trim();
+	var select = document.getElementById("selectScenario"); 
+
+	var options = JSON.parse(document.getElementById('url_list').innerHTML);			  	
+	  
+	if (select.length == 1){			  
+				  
+		for(var i = 0; i < options.length; i++) {
+    		var opt = options[i];
+    		var el = document.createElement("option");
+    		el.textContent = opt.name;
+    		el.value = opt.url;
+    		select.appendChild(el);
+    	}
+    }
+    
+    
+    //var selectedItem=select.options[select.selectedIndex].value;
+    //alert("selecteditem:" + select.selectedIndex);
+	
+	//textinput.value = selectedItem.replace("$host",host).replace("$cluster",cluster); 
+	textinput.value = options[select.selectedIndex - 1].url.replace("$host",host).replace("$cluster",cluster); 	
+	postinput.value = options[select.selectedIndex - 1].post.replace("$host",host).replace("$cluster",cluster).replace(/'/g,'"'); 
+}
+
+
+function httpGet()
+{
+    var xmlHttp = null;
+	var username  = document.getElementById('username').value.trim();
+	var password  = document.getElementById('password').value.trim();
+	var url  = document.getElementById('textinput').value.trim();
+	var post  = document.getElementById('postinput').value.trim();
+	
+	var resultArea  = document.getElementById('resultArea');
+	resultArea.value = "";
+
+	//var theUrl  = 'file:///Users/abajwa/Downloads/index.html';
+    xmlHttp = new XMLHttpRequest();
+    if (post){
+    	alert("Opening " + url + " with post: " + post);
+    	xmlHttp.open( "PUT", url, false );
+    	xmlHttp.setRequestHeader('Content-Type', 'application/json');
+    	xmlHttp.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+    	xmlHttp.setRequestHeader('X-Requested-By', 'ambari');
+    	xmlHttp.send( JSON.stringify(post) );
+    }
+    else{
+    	//alert("Opening GET:" + url);
+    	xmlHttp.open( "GET", url, false );
+
+    	xmlHttp.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password))
+    	xmlHttp.send( null );
+
+    }
+    //alert(xmlHttp.responseText);
+
+    resultArea.value = xmlHttp.responseText;
+}
+
+</script>
+<body onload="updateUrl()" >
+
+<div align="center" id="credentials" >
+<h3>Cluster details</h3>
+<form onkeyup="updateUrl()">
+
+  <label for="host">
+    <span>Ambari server host/port</span>
+    <input type="text" id="host" size="30" value="sandbox.hortonworks.com:8080" />
+  </label>  
+
+  <label for="cluster">
+    <span>Cluster Name</span>
+    <input type="text" id="cluster" value="Sandbox" />
+  </label>  
+  
+  <label for="username">
+    <span>Username</span>
+    <input type="text" id="username" value="admin" />
+  </label>
+  <label for="password">
+    <span>Password</span>
+    <input type="text" id="password" value="admin" />
+  </label>
+</form>
+</div>
+
+<div align="center" id="request">
+<h3>Request</h3>
+
+<form id="dropdown" onchange="updateUrl()">
+
+  <label>
+    <span>Either choose a template</span>
+  </label>  
+  
+  <select id="selectScenario">
+    <option>Choose a template</option>
+  </select>
+
+  <label>
+    <span> or enter url below</span>
+  </label>   
+  
+</form>
+
+<form name="myform" action="javascript:httpGet()" method="POST">
+<input id="textinput" type="text" size="150" value="" />
+<h3>Post Body</h3>
+<textarea align="center" id="postinput" rows="5" cols="150"> </textarea>
+<br>
+<br>
+<input type="submit" value="Submit">
+<br>
+
+<h3>Result</h3>
+<textarea id="resultArea" rows="40" cols="150"></textarea>
+
+</div>
+
+
+</form>
+</body>
+</html>
+
+
