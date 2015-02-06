@@ -41,7 +41,7 @@ export PATH=$PATH:$M2
 ```
 #Pull code (pom.xml, view.xml, index.html)
 cd
-git clone https://github.com/abajwa-hw/iframe-view.git
+git clone https://github.com/abajwa-hw/blueprints-view.git
 cd blueprints-view
 
 #Tell maven to compile against ambari jar (double check that the jar exists in this location, first)
