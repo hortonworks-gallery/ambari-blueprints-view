@@ -79,7 +79,7 @@ http://sandbox.hortonworks.com:8080
   - ![Image](../master/screenshots/export-BP.png?raw=true)
     
 - Stop HBase (assuming its already started):
-  - Select "Stop HBase" from the dropdown and click Submit. Notice there is "1 ops" started running
+  - Select "Stop HBase" from the dropdown and click Submit. Notice "1 ops" started running
   - ![Image](../master/screenshots/stop-Hbase.png?raw=true)
 
 - After a few seconds, check HBase status:
@@ -87,7 +87,7 @@ http://sandbox.hortonworks.com:8080
   - ![Image](../master/screenshots/status-Hbase.png?raw=true)
   
 - Start HBase (assuming its stopped):
-  - Select "Start HBase" from the dropdown and click Submit. Notice there is "1 ops" started running
+  - Select "Start HBase" from the dropdown and click Submit. Notice "1 ops" started running
   - ![Image](../master/screenshots/start-Hbase.png?raw=true)
 
 - Check HBase status:
