@@ -106,4 +106,5 @@ http://sandbox.hortonworks.com:8080
 - You can add your own operations by modifying the JSON in [/var/lib/ambari-server/resources/views/work/BLUEPRINT_VIEW{1.0.0}/index.html](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L7) containing the sample operations, and refreshing the view. This will add your HTTP request to the dropdown list
 
 - You can also update the default values of [hostname](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L138) and [cluster name](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L143) in the same file
-- Note the single quotes in the JSON body will be replaced by double quotes in the view
+
+- Note the values of $host and $cluster will get replaced at runtime. Also the single quotes in the JSON body will be replaced by double quotes in the view
