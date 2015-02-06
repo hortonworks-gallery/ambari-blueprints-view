@@ -71,9 +71,9 @@ http://sandbox.hortonworks.com:8080
 
 ##### Run the sample operations
 
-- First enter your cluster parameters:
-  - host/port (e.g. sandbox.hortonworks.com:8080) 
-  - cluster name (e.g. Sandbox)
+- First check your cluster parameters:
+  - host/port (e.g. sandbox.hortonworks.com:8080). This is autodetected
+  - cluster name (e.g. Sandbox). This is autodetected
   - Username/pass (e.g admin/admin)
 
 - Export cluster blueprint:
@@ -104,7 +104,7 @@ http://sandbox.hortonworks.com:8080
 ##### Add your own operations
 
 - You can add your own operations by modifying the JSON in [/var/lib/ambari-server/resources/views/work/BLUEPRINT_VIEW{1.0.0}/index.html](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L7) containing the sample operations, and refreshing the view. This will add your HTTP request to the dropdown list
+  - Note the values of $host and $cluster will get replaced at runtime. Also the single quotes in the JSON body will be replaced by double quotes when displayed in the view
 
-- You can also update the default values of [hostname](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L138) and [cluster name](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L143) in the same file
+- You can also update the default values of [hostname](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L106) and [cluster name](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L112) in the same file, in case the autodetection is not working for some reason
 
-- Note the values of $host and $cluster will get replaced at runtime. Also the single quotes in the JSON body will be replaced by double quotes in the view
