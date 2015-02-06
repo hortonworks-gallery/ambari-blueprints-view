@@ -72,7 +72,7 @@ function updateUrl(){
 	var options = JSON.parse(document.getElementById('url_list').innerHTML);			  	
 	  
 	if (select.length == 1){			  
-				  
+		  
 		for(var i = 0; i < options.length; i++) {
     		var opt = options[i];
     		var el = document.createElement("option");
@@ -83,12 +83,19 @@ function updateUrl(){
     }
     
     
-    //var selectedItem=select.options[select.selectedIndex].value;
     //alert("selecteditem:" + select.selectedIndex);
+
+	//parse the hostname:port from document
+	var parser = document.createElement('a');
+	parser.href = document.URL;
+	document.getElementById("host").value = parser.host;
+		
+	if (select.selectedIndex > 0){
+		textinput.value = options[select.selectedIndex - 1].url.replace("$host",host).replace("$cluster",cluster); 	
+		postinput.value = options[select.selectedIndex - 1].post.replace("$host",host).replace("$cluster",cluster).replace(/'/g,'"'); 
+	}
+
 	
-	//textinput.value = selectedItem.replace("$host",host).replace("$cluster",cluster); 
-	textinput.value = options[select.selectedIndex - 1].url.replace("$host",host).replace("$cluster",cluster); 	
-	postinput.value = options[select.selectedIndex - 1].post.replace("$host",host).replace("$cluster",cluster).replace(/'/g,'"'); 
 }
 
 
@@ -106,7 +113,7 @@ function httpGet()
 	//var theUrl  = 'file:///Users/abajwa/Downloads/index.html';
     xmlHttp = new XMLHttpRequest();
     if (post){
-    	alert("Opening " + url + " with post: " + post);
+    	//alert("Opening " + url + " with post: " + post);
     	xmlHttp.open( "PUT", url, false );
     	xmlHttp.setRequestHeader('Content-Type', 'application/json');
     	xmlHttp.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
@@ -134,8 +141,8 @@ function httpGet()
 <form onkeyup="updateUrl()">
 
   <label for="host">
-    <span>Ambari server host/port</span>
-    <input type="text" id="host" size="30" value="sandbox.hortonworks.com:8080" />
+    <span>Ambari server host:port</span>
+    <input type="text" id="host" size="30" value="host:port" />
   </label>  
 
   <label for="cluster">
@@ -175,7 +182,7 @@ function httpGet()
 
 <form name="myform" action="javascript:httpGet()" method="POST">
 <input id="textinput" type="text" size="150" value="" />
-<h3>Post Body (not needed for checking status)</h3>
+<h3>Post Body</h3>
 <textarea align="center" id="postinput" rows="5" cols="150"> </textarea>
 <br>
 <br>
@@ -191,5 +198,4 @@ function httpGet()
 </form>
 </body>
 </html>
-
 
