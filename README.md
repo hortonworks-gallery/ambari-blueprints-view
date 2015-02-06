@@ -75,7 +75,7 @@ http://sandbox.hortonworks.com:8080
   - Username/pass (e.g admin/admin)
 
 - Export cluster blueprint:
-  - Select "Full Cluster Blueprint" from the dropdown and click Submit
+  - Select "Full Cluster Blueprint" from the dropdown and click Submit. Notice the entire definition of the cluster is returned
   - ![Image](../master/screenshots/export-BP.png?raw=true)
     
 - Stop HBase (assuming its already started):
