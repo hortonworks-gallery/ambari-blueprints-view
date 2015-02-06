@@ -1,5 +1,5 @@
 #### Make Ambari REST calls from Ambari view
-Demo view to manage Ambari via REST calls using some sample operations:
+Demo view to manage Ambari via REST calls using some [sample operations](https://github.com/abajwa-hw/blueprints-view#run-the-sample-operations):
 - Export blueprint
 - Get status of components
 - Stop/Start services
