@@ -73,8 +73,25 @@ http://sandbox.hortonworks.com:8080
   - host/port (e.g. sandbox.hortonworks.com:8080) 
   - cluster name (e.g. Sandbox)
   - Username/pass (e.g admin/admin)
-  
-- Create blueprint JSON of cluster:
-  - Select "Full cluster blueprint" from the dropdown and click Submit
-![Image](../master/screenshots/screenshot-VNC-view.png?raw=true)
 
+- Export cluster blueprint:
+  - Select "Full Cluster Blueprint" from the dropdown and click Submit
+  - ![Image](../master/screenshots/export-BP.png?raw=true)
+    
+- Stop HBase (assuming its already started):
+  - Select "Stop HBase" from the dropdown and click Submit. Notice there is "1 ops" running
+  - ![Image](../master/screenshots/stop-Hbase.png?raw=true)
+
+- After a few seconds, check HBase status:
+  - Select "HBase status" from the dropdown and click Submit. Notice it is now "INSTALLED" which means is not running
+  - ![Image](../master/screenshots/status-Hbase.png?raw=true)
+  
+- Start HBase (assuming its stopped):
+  - Select "Start HBase" from the dropdown and click Submit. Notice there is "1 ops" running
+  - ![Image](../master/screenshots/start-Hbase.png?raw=true)
+
+- Check HBase status:
+  - Select "HBase status" from the dropdown and click Submit. Notice that it is now started
+  - ![Image](../master/screenshots/status-Hbase-started.png?raw=true)
+
+- Notice that the status check APIs did not require a request body but the stop/start ones did
