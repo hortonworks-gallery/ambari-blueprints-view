@@ -103,7 +103,7 @@ http://sandbox.hortonworks.com:8080
 
 ##### Add your own operations
 
-- You can add your own operations by modifying the JSON in [/var/lib/ambari-server/resources/views/work/BLUEPRINT_VIEW{1.0.0}/index.html](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L7) containing the sample operations, and refreshing the view. This will add your HTTP request to the dropdown list
+- You can add your own operations by modifying the [url_list JSON data in /var/lib/ambari-server/resources/views/work/BLUEPRINT_VIEW{1.0.0}/index.html](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L7) containing the sample operations, and refreshing the view. This will add your HTTP request to the dropdown list
   - Note the values of $host and $cluster will get replaced at runtime. Also the single quotes in the JSON body will be replaced by double quotes when displayed in the view
 
 - You can also update the default values of [hostname](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L106) and [cluster name](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L112) in the same file, in case the autodetection is not working for some reason
