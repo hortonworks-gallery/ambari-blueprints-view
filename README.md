@@ -1,8 +1,9 @@
 #### Make Ambari REST calls from Ambari view
-Demo view to manage Ambari via REST calls. Sample operations:
+Demo view to manage Ambari via REST calls using some sample operations:
 - Export blueprint
 - Get status of components
 - Stop/Start services
+- add your own operations
 
 	 
 		
@@ -67,7 +68,7 @@ http://sandbox.hortonworks.com:8080
 ![Image](../master/screenshots/Open-view.png?raw=true)
 
 
-##### Using the view
+##### Run the sample operations
 
 - First enter your cluster parameters:
   - host/port (e.g. sandbox.hortonworks.com:8080) 
@@ -95,3 +96,9 @@ http://sandbox.hortonworks.com:8080
   - ![Image](../master/screenshots/status-Hbase-started.png?raw=true)
 
 - Notice that the status check APIs did not require a request body but the stop/start ones did
+
+
+##### Add your own operations
+
+- You can add your own operations by modifying [the JSON](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L7) containing the sample operations
+
