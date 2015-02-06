@@ -67,6 +67,7 @@ service ambari-server restart
 http://sandbox.hortonworks.com:8080
 ![Image](../master/screenshots/Open-view.png?raw=true)
 
+---------------------
 
 ##### Run the sample operations
 
@@ -97,6 +98,8 @@ http://sandbox.hortonworks.com:8080
 
 - Notice that the status check APIs did not require a request body but the stop/start ones did
 
+
+---------------------
 
 ##### Add your own operations
 
