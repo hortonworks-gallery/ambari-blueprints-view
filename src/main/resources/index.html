@@ -1,6 +1,7 @@
 <html>
 <head>
 <title>BluePrints Demo </title>
+<link rel="stylesheet" type="text/css" href="style.css"  />
 </head>
 
 
@@ -8,53 +9,55 @@
 
 [
     {
-        "id": 1,
         "name": "Full cluster blueprint",
         "post": "",
         "url": "http://$host/api/v1/clusters/$cluster?format=blueprint"
     },
     {
-        "id": 2,
+        "name": "Fetch all properties for HDP 2.2 stack",
+        "post": "",
+        "url": "http://$host/api/v1/stacks/HDP/versions/2.2/services?fields=configurations"
+    },        
+    {
         "name": "HDFS status",
         "post": "",
         "url": "http://$host/api/v1/clusters/$cluster/services/HDFS"
     },
     {
-        "id": 3,
         "name": "HDFS Datanode status",
         "post": "",
         "url": "http://$host/api/v1/clusters/$cluster/services/HDFS/components/DATANODE"
     },
     {
-        "id": 4,
         "name": "HDFS Namenode status",
         "post": "",
         "url": "http://$host/api/v1/clusters/$cluster/services/HDFS/components/NAMENODE"
     },
     {
-        "id": 5,
         "name": "YARN status",
         "post": "",
         "url": "http://$host/api/v1/clusters/$cluster/services/YARN"
     },
     {
-        "id": 6,
         "name": "HBase status",
         "post": "",
         "url": "http://$host/api/v1/clusters/$cluster/services/HBASE"
     },
     {
-        "id": 7,
         "name": "Start HBase",
         "post": "{'RequestInfo': {'context' :'Start HBase via REST'}, 'Body': {'ServiceInfo': {'state': 'STARTED'}}}",
         "url": "http://$host/api/v1/clusters/$cluster/services/HBASE"
     },
     {
-        "id": 8,
         "name": "Stop HBase",
         "post": "{'RequestInfo': {'context' :'Stop HBase via REST'}, 'Body': {'ServiceInfo': {'state': 'INSTALLED'}}}",
         "url": "http://$host/api/v1/clusters/$cluster/services/HBASE"
-    }                
+    },
+    {
+        "name": "Find which xml section a property belongs to in HDP 2.2",
+        "post": "",
+        "url": "http://$host/api/v1/stacks/HDP/versions/2.2/services?configurations/StackConfigurations/property_name=dfs.datanode.failed.volumes.tolerated&fields=configurations/StackConfigurations"
+    }                    
         
 ]
 
@@ -67,7 +70,7 @@
 function fetchClusterName(url){
 	
     var xmlHttp = new XMLHttpRequest();
-    alert(url);
+    //alert(url);
     xmlHttp.open( "GET", url, false );
 
     xmlHttp.send( null );
@@ -92,7 +95,7 @@ function updateUrl(){
     		el.value = opt.url;
     		select.appendChild(el);
     	}
- 
+ 		postinput.value='';
     }
 
     
@@ -117,6 +120,11 @@ function updateUrl(){
 		postinput.value = options[select.selectedIndex - 1].post.replace("$host",host).replace("$cluster",cluster).replace(/'/g,'"'); 
 	}
 
+	//by default only show post field if selected option has post
+	if (postinput.value && document.getElementById('postinput').className=='hide'){
+		//alert("Expanding post field. postinput val is " + postinput.value); 
+		toggle_textarea('postinput');
+	}
 	
 }
 
@@ -158,69 +166,84 @@ function Submit()
     resultArea.value = xmlHttp.responseText;
 }
 
+
+function toggle_textarea(objname) {
+ var selectedobj=document.getElementById(objname);
+
+  if(selectedobj.className=='hide'){  //check if classname is hide 
+    selectedobj.style.display = "block";
+    selectedobj.readOnly=true;
+    selectedobj.className ='show';
+  }else{
+    selectedobj.style.display = "none";
+    selectedobj.className ='hide';
+ }
+}
+
 </script>
 <body onload="updateUrl()" >
 
 <div align="center" id="credentials" >
-<h3>Cluster details</h3>
-<form onkeyup="updateUrl()">
+	<h1>Ambari REST API explorer</h1>
+	<label onclick="toggle_textarea('credentialform')" style="cursor:pointer"><u><h2>Show/Hide Cluster details</h2></u></label>
 
-  <label for="host">
-    <span>Ambari server host:port</span>
-    <input type="text" id="host" size="30" />
-  </label>  
+	<form onkeyup="updateUrl()" id="credentialform" style="display:none" class="hide">
+  		<h3>Cluster details</h3>
+  		<label for="host">
+    		<span>Ambari server host:port</span>
+    		<input type="text" id="host" size="30" />
+  		</label>  
 
-  <label for="cluster">
-    <span>Cluster Name</span>
-    <input type="text" id="cluster" value="Sandbox" />
-  </label>  
+		<label for="cluster">
+    		<span>Cluster Name</span>
+    		<input type="text" id="cluster" value="Sandbox" />
+  	  	</label>  
   
-  <label for="username">
-    <span>Username</span>
-    <input type="text" id="username" value="admin" />
-  </label>
-  <label for="password">
-    <span>Password</span>
-    <input type="text" id="password" value="admin" />
-  </label>
-</form>
+  		<label for="username">
+    		<span>Username</span>
+    		<input type="text" id="username" value="admin" />
+  		</label>
+		<label for="password">
+    		<span>Password</span>
+    		<input type="text" id="password" value="admin" />
+  		</label>
+	</form>
 </div>
 
 <div align="center" id="request">
-<h3>Request</h3>
 
-<form id="dropdown" onchange="updateUrl()">
+	<form id="dropdown" onchange="updateUrl()">
 
-  <label>
-    <span>Either choose a template</span>
-  </label>  
+		<label>
+    		<span>Either choose a template</span>
+  		</label>  
   
-  <select id="selectScenario">
-    <option>Choose a template</option>
-  </select>
+  		<select id="selectScenario">
+    		<option>Choose a template</option>
+  		</select>
 
-  <label>
-    <span> or enter url below</span>
-  </label>   
-  
-</form>
+  		<label>
+    		<span> or enter url below</span>
+  		</label>   
+		<br>
+		<br>
+		<p>Blueprint API documentation available on <a href='https://cwiki.apache.org/confluence/display/AMBARI/Blueprints'>Apache page</a> and <a href='https://github.com/apache/ambari/tree/trunk/ambari-server/docs/api/v1'>git</a></p>
+	</form>
 
-<form name="myform" action="javascript:Submit()" method="POST">
-<input id="textinput" type="text" size="150" value="" />
-<h3>Post Body</h3>
-<textarea align="center" id="postinput" rows="5" cols="150"> </textarea>
-<br>
-<br>
-<input type="submit" value="Submit">
-<br>
-
-<h3>Result</h3>
-<textarea id="resultArea" rows="40" cols="150"></textarea>
-
+	<form name="myform" action="javascript:Submit()" method="POST">
+		<h3>Request Endpoint</h3>
+		<input id="textinput" type="text" value="" />
+		<br>
+		<label onclick="toggle_textarea('postinput')" style="cursor:pointer"><h2><u>Show/Hide Post Body field</u></h2></label>
+		<textarea align="center" id="postinput"  style="display:none" class="hide" > </textarea>
+		<input type="submit" value="Submit">
+		<br>
+		<h3>Result</h3>
+		<textarea id="resultArea"></textarea>
+	</form>
 </div>
 
 
-</form>
 </body>
 </html>
 

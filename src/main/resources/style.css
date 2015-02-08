@@ -1,0 +1,177 @@
+
+	* { margin: 0px; padding: 0px; }
+	
+	body { 
+		margin: 0 auto; 
+		background: #f5f5f5; 	
+		color: #555;	 
+		width: 1000px; 
+				
+		/* make reference to the Yanone Kaffeesatz font */
+		font-family: 'Tahoma', arial, sans-serif;
+	}
+	
+	table {
+		border-collapse:collapse;
+	}
+	
+	table, td, th {
+		border:1px solid #27A3CE;
+	}
+	
+	th {
+		background-color:#27A3CE;
+		color:white;
+	}
+	
+	td {
+		padding:5px;
+		height:30px;
+		vertical-align:bottom;
+	}
+
+	h1 { 
+		color: #3C008D; 
+		margin: 0 0 20px 0;
+		font-size: 24;
+	}	
+		
+	label {	
+		font-size: 20px;
+		color: #666; 
+	}
+	
+	form { 
+		float: left;
+		border: 1px solid #ddd; 
+		padding: 20px 40px 20px 40px; 
+		margin: 25px 0 0 0;
+		width: 900px;
+		background: #fff;
+				
+		/* -- CSS3 - define rounded corners for the form -- */	
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 10px; 		
+		
+		/* -- CSS3 - create a background graident -- */
+		background: -webkit-gradient(linear, 0% 0%, 0% 40%, from(#EEE), to(#FFFFFF)); 
+		background: -moz-linear-gradient(0% 40% 90deg,#FFF, #EEE); 
+		
+		/* -- CSS3 - add a drop shadow -- */
+		-webkit-box-shadow:0px 0 50px #ccc;
+		-moz-box-shadow:0px 0 50px #ccc; 
+		box-shadow:0px 0 50px #ccc;		 		
+	}	
+	
+	fieldset { border: none; }
+	
+	#user-details { 
+		float: left;
+		width: 230px; 
+	}
+	
+	#user-message { 
+		float: right;
+		width: 405px;
+	}
+	
+	 
+	input, textarea { 		
+		padding: 8px; 
+		margin: 4px 0 20px 0; 
+		background: #fff; 
+		 width: 200px;  
+		font-size: 14px; 
+		color: #555; 
+		border: 1px #ddd solid;
+
+		
+		/* -- CSS3 Shadow - create a shadow around each input element -- */ 
+		-webkit-box-shadow: 0px 0px 4px #aaa;
+		-moz-box-shadow: 0px 0px 4px #aaa; 
+		box-shadow: 0px 0px 4px #aaa;
+		
+		/* -- CSS3 Transition - define what the transition will be applied to (i.e. the background) -- */		
+		-webkit-transition: background 0.3s linear;							
+	}
+
+	input, placeholder {
+		font-family: 'Tahoma', arial, sans-serif;
+		font-size: 18px; 
+	}
+
+	input#textinput {
+		width: 700px;
+	}	
+	input#host {
+		width: 300px;
+	}	
+		
+	select, option {
+		font-family: 'Tahoma', arial, sans-serif;
+		font-size: 18px; 
+	}
+	
+	p, error {
+		font-family: 'Tahoma', arial, sans-serif;
+		font-size: 18px;
+		color: #E48080;
+		margin: -16px 0 4px 0;
+		text-align: center;
+	}
+	
+	h2, successmsg {
+		font-family: 'Tahoma', arial, sans-serif;
+		font-size: 18px;
+		color: #0a85a8;
+		margin: -10px 0 4px 0;
+	}
+
+	textarea#postinput {		
+		 width: 700px; 
+		height: 100px; 		 		
+	}
+	
+	textarea {		
+		 width: 700px; 
+		height: 600px; 		 		
+	}
+	
+	
+	input:hover, textarea:hover { 
+		background: #eee; 
+	}
+		
+	input.submit { 	
+		width: 100px; 
+		color: #eee; 
+		text-transform: uppercase; 
+		margin-top: 10px;
+		background-color: #18a5cc;
+		border: none;
+		font-family: 'Tahoma', arial, sans-serif;
+		font-size: 18px;
+		
+		/* -- CSS3 Transition - define which property to animate (i.e. the shadow)  -- */
+		-webkit-transition: -webkit-box-shadow 0.3s linear;
+		
+		/* -- CSS3 - Rounded Corners -- */
+		-moz-border-radius: 4px; 
+		-webkit-border-radius: 4px;
+		border-radius: 4px; 
+						
+		/* -- CSS3 Shadow - create a shadow around each input element -- */ 
+		background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#18a5cc), to(#0a85a8)); 
+		background: -moz-linear-gradient(25% 75% 90deg,#0a85a8, #18a5cc);		
+	} 
+	
+	input.submit:hover { 		
+		-webkit-box-shadow: 0px 0px 20px #555;
+		-moz-box-shadow: 0px 0px 20px #aaa; 
+		box-shadow: 0px 0px 20px #555;	
+		cursor:  pointer; 
+	} 
+	
+
+
