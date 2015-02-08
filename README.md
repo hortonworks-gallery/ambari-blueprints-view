@@ -37,7 +37,7 @@ export M2=$M2_HOME/bin
 export PATH=$PATH:$M2
 ```
 
-- To deploy the iFrame view, run below. On non-sandbox env, these steps should be run on node running Ambari server
+- To deploy the view, run below. On non-sandbox env, these steps should be run on node running Ambari server
 ```
 #Pull code (pom.xml, view.xml, index.html)
 cd
