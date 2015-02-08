@@ -19,39 +19,85 @@
         "url": "http://$host/api/v1/stacks/HDP/versions/2.2/services?fields=configurations"
     },        
     {
-        "name": "HDFS status",
+        "name": "Fetch cluster name",
+        "post": "",
+        "url": "http://$host/api/v1/clusters"
+    },    
+    
+    {
+        "name": "Fetch cluster hosts",
+        "post": "",
+        "url": "http://$host/api/v1/clusters/$cluster/hosts"
+    },         
+    {
+        "name": "Fetch host details",
+        "post": "",
+        "url": "http://$host/api/v1/clusters/$cluster/hosts/$hostname"
+    }, 
+    {
+        "name": "Fetch components on a host",
+        "post": "",
+        "url": "http://$host/api/v1/clusters/$cluster/hosts/$hostname/host_components"
+    },             
+    {
+        "name": "Fetch cluster workflows",
+        "post": "",
+        "url": "http://$host/api/v1/clusters/$cluster/workflows"
+    },        
+    {
+        "name": "Fetch cluster services",
+        "post": "",
+        "url": "http://$host/api/v1/clusters/$cluster/services"
+    },  
+    {
+        "name": "HDFS status and service details",
         "post": "",
         "url": "http://$host/api/v1/clusters/$cluster/services/HDFS"
     },
     {
-        "name": "HDFS Datanode status",
+        "name": "HDFS service components",
         "post": "",
-        "url": "http://$host/api/v1/clusters/$cluster/services/HDFS/components/DATANODE"
-    },
+        "url": "http://$host/api/v1/clusters/$cluster/services/HDFS/components"
+    },    
     {
-        "name": "HDFS Namenode status",
+        "name": "HDFS component Namenode status - full response",
         "post": "",
         "url": "http://$host/api/v1/clusters/$cluster/services/HDFS/components/NAMENODE"
     },
     {
-        "name": "YARN status",
+        "name": "HDFS component Namenode status - partial response",
+        "post": "",
+        "url": "http://$host/api/v1/clusters/$cluster/services/HDFS/components/NAMENODE?fields=metrics/dfs/FSNamesystem/CapacityRemainingGB"
+    },    
+    {
+        "name": "YARN status and service details",
         "post": "",
         "url": "http://$host/api/v1/clusters/$cluster/services/YARN"
     },
     {
-        "name": "HBase status",
+        "name": "HBase status and service details",
         "post": "",
         "url": "http://$host/api/v1/clusters/$cluster/services/HBASE"
     },
     {
-        "name": "Start HBase",
+        "name": "Start HBase service on cluster",
         "post": "{'RequestInfo': {'context' :'Start HBase via REST'}, 'Body': {'ServiceInfo': {'state': 'STARTED'}}}",
         "url": "http://$host/api/v1/clusters/$cluster/services/HBASE"
     },
     {
-        "name": "Stop HBase",
+        "name": "Stop HBase service on cluster",
         "post": "{'RequestInfo': {'context' :'Stop HBase via REST'}, 'Body': {'ServiceInfo': {'state': 'INSTALLED'}}}",
         "url": "http://$host/api/v1/clusters/$cluster/services/HBASE"
+    },  
+    {
+        "name": "List requests/operations",
+        "post": "",
+        "url": "http://$host/api/v1/clusters/$cluster/requests"
+    },    
+    {
+        "name": "List views",
+        "post": "",
+        "url": "http://$host/api/v1/views"
     },
     {
         "name": "Find which xml section a property belongs to in HDP 2.2",
@@ -107,17 +153,23 @@ function updateUrl(){
 		host = parser.host;    
 	else
 		host = "sandbox.hortonworks.com:8080";
+		
+	if (parser.hostname)
+		hostname = parser.hostname;    
+	else
+		hostname = "sandbox.hortonworks.com";		
 	document.getElementById("host").value = host;
 
-    //fetch cluster name by querying API http://sandbox.hortonworks.com:8080/api/v1/clusters or default to Sandbox
+    //fetch cluster name by querying API http://host:port/api/v1/clusters or default to Sandbox
     var clustername = fetchClusterName("http://" + host + "/api/v1/clusters"); 
     if (!clustername)
     	clustername = "Sandbox";	
         			
     //set the url textbox and post body text box based on user input    			
 	if (select.selectedIndex > 0){
-		textinput.value = options[select.selectedIndex - 1].url.replace("$host",host).replace("$cluster",cluster); 	
-		postinput.value = options[select.selectedIndex - 1].post.replace("$host",host).replace("$cluster",cluster).replace(/'/g,'"'); 
+		textinput.value = options[select.selectedIndex - 1].url.replace("$host",host).replace("$cluster",cluster).replace("$hostname",hostname); 	
+		postinput.value = options[select.selectedIndex - 1].post.replace("$host",host).replace("$cluster",cluster).replace("$hostname",hostname).replace(/'/g,'"'); 
+		moveCursorToEnd(textinput);
 	}
 
 	//by default only show post field if selected option has post
@@ -164,6 +216,7 @@ function Submit()
     //alert(xmlHttp.responseText);
 
     resultArea.value = xmlHttp.responseText;
+    moveCursorToEnd(textinput);
 }
 
 
@@ -178,6 +231,15 @@ function toggle_textarea(objname) {
     selectedobj.style.display = "none";
     selectedobj.className ='hide';
  }
+}
+
+function moveCursorToEnd(input) {
+	input.focus(); //sets focus to element
+	//if (input){
+		var val = input.value; //store the value of the element
+		input.value = ''; //clear the value of the element
+		input.value = val; //set that value back.  
+	//}
 }
 
 </script>
