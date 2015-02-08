@@ -164,6 +164,7 @@ function updateUrl(){
     var clustername = fetchClusterName("http://" + host + "/api/v1/clusters"); 
     if (!clustername)
     	clustername = "Sandbox";	
+ 	 document.getElementById("cluster").value = clustername;   			
         			
     //set the url textbox and post body text box based on user input    			
 	if (select.selectedIndex > 0){
@@ -258,7 +259,7 @@ function moveCursorToEnd(input) {
 
 		<label for="cluster">
     		<span>Cluster Name</span>
-    		<input type="text" id="cluster" value="Sandbox" />
+    		<input type="text" id="cluster"  />
   	  	</label>  
   
   		<label for="username">
@@ -289,7 +290,7 @@ function moveCursorToEnd(input) {
   		</label>   
 		<br>
 		<br>
-		<p>Blueprint API documentation available on <a href='https://cwiki.apache.org/confluence/display/AMBARI/Blueprints'>Apache page</a> and <a href='https://github.com/apache/ambari/tree/trunk/ambari-server/docs/api/v1'>git</a></p>
+		<p>Ambari REST API details available on <a href='https://github.com/apache/ambari/tree/trunk/ambari-server/docs/api/v1'>git</a>. Blueprint samples/recommended usage available on <a href='https://cwiki.apache.org/confluence/display/AMBARI/Blueprints'>Apache page</a></p>
 	</form>
 
 	<form name="myform" action="javascript:Submit()" method="POST">
