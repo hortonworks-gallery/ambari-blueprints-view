@@ -5,6 +5,7 @@ Demo view to manage Ambari via REST calls using some [sample operations](https:/
 - Stop/Start services
 - [Add your own operations](https://github.com/abajwa-hw/blueprints-view#add-your-own-operations)
 
+![Image](../master/screenshots/updatedUI.png?raw=true)
 	 
 		
 ##### Setup
