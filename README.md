@@ -7,6 +7,7 @@ Demo view to manage Ambari via REST calls using some [sample operations](https:/
 
 ![Image](../master/screenshots/updatedUI.png?raw=true)
 	 
+-----------------
 		
 ##### Setup
 
