@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>BluePrints Demo </title>
+<title>Ambari REST API Explorer</title>
 <link rel="stylesheet" type="text/css" href="style.css"  />
 </head>
 
@@ -103,28 +103,39 @@
         "name": "Find which xml section a property belongs to in HDP 2.2",
         "post": "",
         "url": "http://$host/api/v1/stacks/HDP/versions/2.2/services?configurations/StackConfigurations/property_name=dfs.datanode.failed.volumes.tolerated&fields=configurations/StackConfigurations"
-    }                    
+    },
+    {
+        "name": "WebHDFS",
+        "post": "",
+        "url": "http://sandbox.hortonworks.com:50070/webhdfs/v1/?op=LISTSTATUS"
+    }                
         
 ]
 
 
 </script>
 
+<!-- <script type="text/javascript" src="http://sandbox.hortonworks.com:50070/webhdfs/v1/?op=LISTSTATUS&callback=jsonpResultsCallBack"></script> -->
+
+
 <script>
 
 
 function fetchClusterName(url){
-	
+	console.log("fetchClusterName called for: " + url);
     var xmlHttp = new XMLHttpRequest();
     //alert(url);
     xmlHttp.open( "GET", url, false );
 
     xmlHttp.send( null );
 	var clusters = JSON.parse(xmlHttp.responseText);
-	return clusters.items[0].Clusters.cluster_name;
+	var clustername = clusters.items[0].Clusters.cluster_name;
+	console.log("detected clustername to be " + clustername);
+	return clustername;
 }
 
 function updateUrl(){
+	console.log("updateURL called");
 	var cluster  = document.getElementById('cluster').value.trim();
 	var host = document.getElementById('host').value.trim();
 	var select = document.getElementById("selectScenario"); 
@@ -156,14 +167,20 @@ function updateUrl(){
 		
 	if (parser.hostname)
 		hostname = parser.hostname;    
-	else
-		hostname = "sandbox.hortonworks.com";		
+	
+	else {
+		hostname = "sandbox.hortonworks.com";	
+		console.error("Unable to to detect hostame...using default");	
+	}	
 	document.getElementById("host").value = host;
 
     //fetch cluster name by querying API http://host:port/api/v1/clusters or default to Sandbox
-    var clustername = fetchClusterName("http://" + host + "/api/v1/clusters"); 
-    if (!clustername)
-    	clustername = "Sandbox";	
+    var clusterurl = "http://" + host + "/api/v1/clusters";
+    var clustername = fetchClusterName(clusterurl); 
+    if (!clustername){
+    	console.error("Unable to to detect clustername from: " + clusterurl);
+    	clustername = "Sandbox";
+    }	
  	 document.getElementById("cluster").value = clustername;   			
         			
     //set the url textbox and post body text box based on user input    			
@@ -175,15 +192,21 @@ function updateUrl(){
 
 	//by default only show post field if selected option has post
 	if (postinput.value && document.getElementById('postinput').className=='hide'){
-		//alert("Expanding post field. postinput val is " + postinput.value); 
+		console.log("Expanding post field. postinput val is nonempty"); 
 		toggle_textarea('postinput');
 	}
 	
 }
 
+function jsonpResultsCallBack(data)
+{
+	console.log("jsonpResultsCallBack called");
+    //alert(JSON.stringify(data));
+}
 
 function Submit()
 {
+	console.log("Submit called");
     var xmlHttp = null;
 	var username  = document.getElementById('username').value.trim();
 	var password  = document.getElementById('password').value.trim();
@@ -197,17 +220,27 @@ function Submit()
     
 	//if post text field is not empty, perform PUT
     if (post){
-    	//alert("Opening " + url + " with post: " + post);
+    	console.log("Executing PUT " + url + " with post: " + post);
     	xmlHttp.open( "PUT", url, false );
     	xmlHttp.setRequestHeader('Content-Type', 'application/json');
     	xmlHttp.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
     	xmlHttp.setRequestHeader('X-Requested-By', 'ambari');
     	xmlHttp.send( JSON.stringify(post) );
     }
+    /*else if (url.indexOf("xxxxx50070") != -1){
+    	console.log("sending Jsonp");
+		var s = document.createElement('script');
+	    s.id = 'dynScript';
+	    s.type='text/javascript';
+	    var jsonp_url = url + '?op=LISTSTATUS&callback=jsonpResultsCallBack';
+ 	    alert("url is " + jsonp_url);
+ 	    s.src = jsonp_url; 	    
+		document.getElementsByTagName('head')[0].appendChild(s);
+    }*/
     
 	//otherwise perform GET
     else{
-    	//alert("Opening GET:" + url);
+    	console.log("Opening GET: " + url);
     	xmlHttp.open( "GET", url, false );
 
     	xmlHttp.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password))
@@ -222,19 +255,21 @@ function Submit()
 
 
 function toggle_textarea(objname) {
- var selectedobj=document.getElementById(objname);
+ 	console.log("toggle_textarea called");
+ 	var selectedobj=document.getElementById(objname);
 
-  if(selectedobj.className=='hide'){  //check if classname is hide 
-    selectedobj.style.display = "block";
-    selectedobj.readOnly=true;
-    selectedobj.className ='show';
-  }else{
-    selectedobj.style.display = "none";
-    selectedobj.className ='hide';
- }
+  	if(selectedobj.className=='hide'){  //check if classname is hide 
+  		  selectedobj.style.display = "block";
+    	selectedobj.readOnly=true;
+    	selectedobj.className ='show';
+  	}else{
+    	selectedobj.style.display = "none";
+    	selectedobj.className ='hide';
+ 	}
 }
 
 function moveCursorToEnd(input) {
+	console.log("moveCursorToEnd called");
 	input.focus(); //sets focus to element
 	//if (input){
 		var val = input.value; //store the value of the element
@@ -247,7 +282,7 @@ function moveCursorToEnd(input) {
 <body onload="updateUrl()" >
 
 <div align="center" id="credentials" >
-	<h1>Ambari REST API explorer</h1>
+	<h1>Ambari REST API Explorer View</h1>
 	<label onclick="toggle_textarea('credentialform')" style="cursor:pointer"><u><h2>Show/Hide Cluster details</h2></u></label>
 
 	<form onkeyup="updateUrl()" id="credentialform" style="display:none" class="hide">
