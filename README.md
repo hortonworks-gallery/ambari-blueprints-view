@@ -6,7 +6,8 @@ Demo view to manage Ambari via REST calls using some [sample operations](https:/
 - [Add your own operations](https://github.com/abajwa-hw/blueprints-view#add-your-own-operations)
 
 ![Image](../master/screenshots/updatedUI.png?raw=true)
-	 
+
+- **Note: ALL requests are passing in 'X-Requested-By: ambari' header**.  This is why the requests will not work via the browser 	 
 -----------------
 		
 ##### Setup
@@ -100,7 +101,6 @@ http://sandbox.hortonworks.com:8080
 
 - Notice that the status check APIs did not require a request body but the stop/start ones did
 
-- **ALL requests are passing in 'X-Requested-By: ambari' header**.  This is why the requests will not work via the browser 
 
 ---------------------
 
