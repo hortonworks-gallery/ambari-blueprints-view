@@ -111,3 +111,8 @@ http://sandbox.hortonworks.com:8080
 
 - You can also update the default values of [hostname](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L106) and [cluster name](https://github.com/abajwa-hw/blueprints-view/blob/master/src/main/resources/index.html#L112) in the same file, in case the autodetection is not working for some reason
 
+----------------------
+
+##### Update configurations
+
+To update component configurations, see examples [here](https://gist.github.com/seanorama/6e2958f847cee2132792#file-configurations-md)
