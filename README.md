@@ -47,8 +47,8 @@ cd
 git clone https://github.com/abajwa-hw/blueprints-view.git
 cd blueprints-view
 
-#Tell maven to compile against ambari jar (double check that the jar exists in this location, first)
-mvn install:install-file -Dfile=/usr/lib/ambari-server/ambari-views-1.7.0.169.jar -DgroupId=org.apache.ambari -DartifactId=ambari-views -Dversion=1.3.0-SNAPSHOT -Dpackaging=jar
+#No longer needed - Tell maven to compile against ambari jar (double check that the jar exists in this location, first)
+#mvn install:install-file -Dfile=/usr/lib/ambari-server/ambari-views-1.7.0.169.jar -DgroupId=org.apache.ambari -DartifactId=ambari-views -Dversion=1.3.0-SNAPSHOT -Dpackaging=jar
 
 #Compile view
 mvn clean package
